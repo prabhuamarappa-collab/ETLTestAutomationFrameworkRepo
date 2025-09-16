@@ -13,4 +13,5 @@ jobs:
         with:
           python-version: "3.11"   # or 3.10, match your version
       - run: pip install -r requirements.txt
-      - run: pytest --html=reports/report.html --self-contained-html
+      - run: pytest tests/ --html=reports/report.html --self-contained-html
+
