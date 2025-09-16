@@ -1,1 +1,0 @@
-[1m[31mERROR   [0m test_business_rules:test_business_rules.py:27 Age mismatch for rows : [6]
