@@ -1,36 +1,29 @@
-name: ETL Test Automation
+name: pytest
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
-  pytest:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v4   # updated
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5   # updated
         with:
-          python-version: '3.13'
+          python-version: "3.11"   # or your version
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest pytest-html allure-pytest
+          pip install pytest pandas
 
-      - name: Run Pytest
-        run: |
-          pytest tests/ -m regression -vs --html=report.html --self-contained-html
+      - name: Run tests
+        run: pytest -v
 
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v3
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4   # updated
         with:
-          name: pytest-report
-          path: report.html
+          name: pytest-results
+          path: .pytest_cache
